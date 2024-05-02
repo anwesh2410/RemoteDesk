@@ -1,5 +1,6 @@
 import socket
-import tkinter as tk
+#import tkinter as tk
+from authenticate import Authenticate
 
 class Start:
     def __init__(self):

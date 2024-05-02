@@ -1,4 +1,5 @@
 import tkinter as tk
+from create_frame import CreateFrame
 
 class Authenticate(tk.Frame):
     def __init__(self, cSocket):
