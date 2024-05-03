@@ -145,10 +145,12 @@ class ReceiveEvents extends Thread {
     Socket socket = null;
     Robot robot = null;
     boolean continueLoop = true;
+    Dimension screenSize = null;
 
     public ReceiveEvents(Socket socket, Robot robot) {
         this.socket = socket;
         this.robot = robot;
+        this.screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         start();
     }
 
@@ -159,20 +161,32 @@ class ReceiveEvents extends Thread {
             while (continueLoop) {
                 int command = scanner.nextInt();
                 switch (command) {
-                    case -1:
-                        robot.mousePress(scanner.nextInt());
+                    case -1: // Mouse press
+                        int button = scanner.nextInt();
+                        robot.mousePress(button);
                         break;
-                    case -2:
-                        robot.mouseRelease(scanner.nextInt());
+                    case -2: // Mouse release
+                        int releaseButton = scanner.nextInt();
+                        robot.mouseRelease(releaseButton);
                         break;
-                    case -3:
-                        robot.keyPress(scanner.nextInt());
+                    case -3: // Key press
+                        int keyCode = scanner.nextInt();
+                        robot.keyPress(keyCode);
                         break;
-                    case -4:
-                        robot.keyRelease(scanner.nextInt());
+                    case -4: // Key release
+                        int releaseKeyCode = scanner.nextInt();
+                        robot.keyRelease(releaseKeyCode);
                         break;
-                    case -5:
-                        robot.mouseMove(scanner.nextInt(), scanner.nextInt());
+                    case -5: // Mouse move
+                        int x = scanner.nextInt();
+                        int y = scanner.nextInt();
+                        // Scale mouse coordinates based on server screen size
+                        double scaleX = (double) screenSize.width / x;
+                        double scaleY = (double) screenSize.height / y;
+                        Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
+                        int newX = (int) (mouseLocation.x / scaleX);
+                        int newY = (int) (mouseLocation.y / scaleY);
+                        robot.mouseMove(newX, newY);
                         break;
                 }
             }
