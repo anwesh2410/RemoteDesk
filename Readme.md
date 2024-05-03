@@ -30,7 +30,7 @@ The client side of the Remote Desktop Application is responsible for authenticat
 ### For Windows:
 
 1. **Download JAR Files:**
-   - Ensure you have downloaded the `client.jar` and `server.jar` files from the repository.
+   - Ensure you have downloaded the `client.jar` and `server.jar` files from the JAR folder in the repository.
 
 2. **Open JAR Files:**
    - Directly open the respective jar files that you need
@@ -39,7 +39,7 @@ The client side of the Remote Desktop Application is responsible for authenticat
 ### For Unix-Based Systems (Linux, macOS, etc.):
 
 1. **Download JAR Files:**
-   - Ensure you have downloaded the `client.jar` and `server.jar` files from the repository.
+   - Ensure you have downloaded the `client.jar` and `server.jar` files from the JAR folder in the repository.
 
 2. **Server Execution:**
    - Open Terminal.
