@@ -1,10 +1,10 @@
 import socket
-#import tkinter as tk
+import tkinter as tk
 from authenticate import Authenticate
 
 class Start:
     def __init__(self):
-        self.port = "4907"
+        self.port = "45666"
 
     def main(self):
         ip = input("Please enter server ip: ")
@@ -12,9 +12,13 @@ class Start:
 
     def initialize(self, ip, port):
         try:
+            print(f"Attempting to connect to server at {ip}:{port}")
             sc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sc.connect((ip, port))
-            print("Connecting to the Server")
+            print("Connected to the Server")
+
+        # Rest of your code here...
+
         
             # Authenticate class is responsible for security purposes
             frame1 = Authenticate(sc)
