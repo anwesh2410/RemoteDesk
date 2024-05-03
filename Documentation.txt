@@ -1,0 +1,66 @@
+Remote Desktop Application Documentation
+
+---
+
+1. Overview:
+
+This document provides a detailed explanation of a client-server remote desktop application developed in Java. The application enables users to remotely access and
+ control the desktop of a server machine over a network connection. The system comprises two main components: the client-side and the server-side.
+
+---
+
+2. Client-Side:
+
+2.1. Main Class (Main.java):
+- Entry point of the client-side application.
+- Prompts the user to input the server's IP address and initiates the authentication process.
+- Creates an instance of the Authenticate class to handle authentication and display the remote desktop interface.
+
+2.2. Authenticate Class:
+- Manages user authentication with the server.
+- Displays a login form prompting the user to enter a password.
+- Upon successful authentication, initializes a frame to display the remote desktop.
+- Implements ActionListener to handle user input events.
+
+2.3. CreateFrame Class:
+- Creates and manages the graphical user interface (GUI) for displaying the remote desktop.
+- Utilizes JDesktopPane and JInternalFrame to create a resizable desktop window.
+- Implements a thread to handle concurrent processes for receiving screen updates and sending user input events.
+
+2.4. ReceiveScreen Class:
+- Receives screen updates from the server and displays them in the client's GUI.
+- Utilizes ImageIO for image reading and Graphics for image drawing onto the panel.
+
+2.5. SendEvents Class:
+- Handles user input events such as mouse movements, clicks, and keyboard inputs.
+- Sends these events to the server for processing and execution on the remote desktop.
+- Implements KeyListener, MouseListener, and MouseMotionListener interfaces for capturing user inputs.
+
+---
+
+3. Server-Side:
+
+3.1. Main Class (Main.java):
+- Entry point of the server-side application.
+- Displays a GUI for setting the password required for client authentication.
+- Initializes the connection and authentication process upon receiving a password from the user.
+
+3.2. InitConnection Class:
+- Manages server-side logic for accepting client connections and authenticating users.
+- Creates instances of SendScreen and ReceiveEvents classes upon successful authentication for screen sharing and event handling.
+
+3.3. SendScreen Class:
+- Captures the server's screen and sends screen updates to connected clients.
+- Utilizes Robot for screen capturing and OutputStream for data transmission over the network.
+
+3.4. ReceiveEvents Class:
+- Listens for user input events received from clients.
+- Processes and executes these events on the server's desktop using Robot.
+
+---
+
+4. Conclusion:
+
+This documentation provides an in-depth understanding of the client-server remote desktop application's architecture, functionalities, and 
+classes involved in both the client and server sides. Developers can refer to this documentation for further development, debugging, and 
+enhancement of the application's features and functionalities.
