@@ -1,0 +1,99 @@
+---
+layout: default
+title: Remote Desktop Application
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            margin-bottom: 10px;
+        }
+        .section p {
+            line-height: 1.6;
+        }
+        .code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ page.title }}</h1>
+
+        <div class="section">
+            <h2>About</h2>
+            <p>The Remote Desktop Application allows users to remotely access and control the desktop of a server machine over a network connection.</p>
+        </div>
+
+        <div class="section">
+            <h2>Server Side</h2>
+            <p>The server side of the Remote Desktop Application is responsible for managing client connections, authenticating users, capturing the server's screen, and sending screen updates to connected clients.</p>
+            <div class="code">
+                <pre>
+                    <code>
+                        // Sample code to execute the server JAR file
+                        java -jar server.jar
+                    </code>
+                </pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Client Side</h2>
+            <p>The client side of the Remote Desktop Application is responsible for authenticating users, displaying the server's desktop interface, and handling user input events.</p>
+            <div class="code">
+                <pre>
+                    <code>
+                        // Sample code to execute the client JAR file
+                        java -jar client.jar
+                    </code>
+                </pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Steps to Deploy</h2>
+            <ol>
+                <li>Download the server and client JAR files from the repository.</li>
+                <li>Execute the server JAR file on the server machine.</li>
+                <li>Execute the client JAR file on the client machine.</li>
+                <li>Enter the server's IP address and the password set for authentication.</li>
+                <li>Access the remote desktop interface and start controlling the server's desktop remotely.</li>
+            </ol>
+        </div>
+        
+        <div class="section">
+            <h2>Dependencies</h2>
+            <p>No external dependencies required. The JAR files contain all necessary dependencies bundled within them.</p>
+        </div>
+
+        <div class="section">
+            <h2>License</h2>
+            <p>This project is licensed under the <a href="LICENSE">MIT License</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
