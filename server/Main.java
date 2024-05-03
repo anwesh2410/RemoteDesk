@@ -16,40 +16,94 @@ import java.io.DataOutputStream;
 
 
 public class Main extends JFrame implements ActionListener {
-    static String port = "4907";
-    JButton SUBMIT;
+    static String port = "4906";
+    JButton connectButton, terminateButton; // Buttons for connecting and terminating sharing
     JPanel panel;
-    JLabel label1, label2;
-    JTextField text1, text2;
-    String value1;
+    JLabel label1;
+    JPasswordField passwordField;
+    String password;
+    ServerSocket serverSocket;
+    boolean sharingStarted = false;
 
     Main() {
         label1 = new JLabel();
-        label1.setText("Set Password");
-        text1 = new JTextField(15);
+        label1.setText("Enter Password");
+        passwordField = new JPasswordField(15);
 
         this.setLayout(new BorderLayout());
 
-        SUBMIT = new JButton("SUBMIT");
-        SUBMIT.addActionListener(this);
+        connectButton = new JButton("Connect");
+        connectButton.addActionListener(this);
 
-        panel = new JPanel(new GridLayout(2, 1));
+        panel = new JPanel(new GridLayout(3, 1));
         panel.add(label1);
-        panel.add(text1);
-        panel.add(SUBMIT);
+        panel.add(passwordField);
+        panel.add(connectButton);
 
         add(panel, BorderLayout.CENTER);
 
-        setTitle("Set Password to connect to the Client");
-        setSize(300, 80);
-        setLocation(500, 300);
+        setTitle("Remote Desktop Control Server");
+        setSize(300, 150);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+        // Initialize server socket
+        try {
+            serverSocket = new ServerSocket(Integer.parseInt(port));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void actionPerformed(ActionEvent ae) {
-        value1 = text1.getText();
+        if (ae.getSource() == connectButton) {
+            if (!sharingStarted) {
+                password = new String(passwordField.getPassword());
+                if (password.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    new InitConnection(Integer.parseInt(port), password);
+                    sharingStarted = true;
+                    connectButton.setEnabled(false);
+                    createTerminateDialog(); // Create separate terminate dialog
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Sharing already started", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+    }
+
+    private void createTerminateDialog() {
+        JFrame terminateFrame = new JFrame("Terminate Sharing");
+        terminateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel terminatePanel = new JPanel();
+        terminateButton = new JButton("Terminate Sharing");
+        terminateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int response = JOptionPane.showConfirmDialog(terminateFrame, "Are you sure you want to terminate sharing?", "Terminate Sharing", JOptionPane.YES_NO_OPTION);
+                if (response == JOptionPane.YES_OPTION) {
+                    terminateSharing();
+                    terminateFrame.dispose();
+                }
+            }
+        });
+        terminatePanel.add(terminateButton);
+        terminateFrame.add(terminatePanel);
+        terminateFrame.setSize(200, 100);
+        terminateFrame.setLocationRelativeTo(null);
+        terminateFrame.setVisible(true);
+    }
+
+    private void terminateSharing() {
         dispose();
-        new InitConnection(Integer.parseInt(port), value1);
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Sharing terminated.");
     }
 
     public static void main(String[] args) {
@@ -57,12 +111,11 @@ public class Main extends JFrame implements ActionListener {
     }
 }
 
+
 class InitConnection {
     ServerSocket socket = null;
     DataInputStream password = null;
     DataOutputStream verify = null;
-    String width = "";
-    String height = "";
 
     InitConnection(int port, String value1) {
         Robot robot = null;
@@ -181,5 +234,3 @@ class ReceiveEvents extends Thread {
         }
     }
 }
-
-
